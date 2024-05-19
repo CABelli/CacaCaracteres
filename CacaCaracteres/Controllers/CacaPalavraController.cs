@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CacaCaracteres.Dto;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Controllers;
 
@@ -6,14 +8,21 @@ namespace CacaCaracteres.Controllers;
 [Route("[controller]")]
 public class CacaPalavraController : ControllerBase
 {
-    [HttpGet(Name = "Get-Ok")]
-    public Saida Get()
+    private bool success;
+
+    [HttpGet]
+    public SaidaCacaPalavrasDto Get()
     {
-        var saida = new Saida { Resultado = "Foi" };
+        var saida = new SaidaCacaPalavrasDto { Texto = "Frase 01", Resultado = "Processar retorno" };
         return saida;
     }
+
+    [HttpPost]
+    public SaidaCacaPalavrasDto Post([FromBody] EntradaCacaPalavrasDto entrada)
+    {
+        var saida = new SaidaCacaPalavrasDto { Texto = entrada.Texto };
+        saida.Resultado = "Resultado Processado";
+        return saida; 
+    }
 }
-public class Saida
-{
-    public string? Resultado { get; set; }
-}
+
