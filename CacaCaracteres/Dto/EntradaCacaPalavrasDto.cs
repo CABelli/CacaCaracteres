@@ -2,5 +2,5 @@
 
 public class EntradaCacaPalavrasDto
 {
-    public string? Texto { get; set; }
+    public required string Texto { get; set; }
 }
