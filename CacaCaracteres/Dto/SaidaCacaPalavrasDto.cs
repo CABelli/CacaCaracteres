@@ -3,5 +3,5 @@
 public class SaidaCacaPalavrasDto
 {
     public string? Texto {  get; set; }
-    public string? Resultado { get; set; }
+    public int NumeroDePalavras { get; set; }
 }

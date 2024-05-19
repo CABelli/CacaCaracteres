@@ -1,5 +1,4 @@
 ﻿using CacaCaracteres.Dto;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Controllers;
@@ -8,12 +7,11 @@ namespace CacaCaracteres.Controllers;
 [Route("[controller]")]
 public class CacaPalavraController : ControllerBase
 {
-    private bool success;
 
     [HttpGet]
     public SaidaCacaPalavrasDto Get()
     {
-        var saida = new SaidaCacaPalavrasDto { Texto = "Frase 01", Resultado = "Processar retorno" };
+        var saida = new SaidaCacaPalavrasDto { Texto = "Frase 01", NumeroDePalavras = 0 };
         return saida;
     }
 
@@ -21,7 +19,7 @@ public class CacaPalavraController : ControllerBase
     public SaidaCacaPalavrasDto Post([FromBody] EntradaCacaPalavrasDto entrada)
     {
         var saida = new SaidaCacaPalavrasDto { Texto = entrada.Texto };
-        saida.Resultado = "Resultado Processado";
+        saida.NumeroDePalavras = entrada.Texto.Split(' ').Length;
         return saida; 
     }
 }

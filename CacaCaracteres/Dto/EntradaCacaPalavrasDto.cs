@@ -1,7 +1,6 @@
-﻿namespace CacaCaracteres.Dto
+﻿namespace CacaCaracteres.Dto;
+
+public class EntradaCacaPalavrasDto
 {
-    public class EntradaCacaPalavrasDto
-    {
-        public string? Texto { get; set; }
-    }
+    public string? Texto { get; set; }
 }
