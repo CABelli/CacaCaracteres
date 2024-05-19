@@ -1,7 +1,12 @@
+using CacaCaracteres.Interfaces;
+using CacaCaracteres.Servicos;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+
+builder.Services.AddScoped<IResumoTextoServico, ResumoTextoServico>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,4 +1,5 @@
 ﻿using CacaCaracteres.Dto;
+using CacaCaracteres.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Controllers;
@@ -7,6 +8,12 @@ namespace CacaCaracteres.Controllers;
 [Route("[controller]")]
 public class CacaPalavraController : ControllerBase
 {
+    private readonly IResumoTextoServico _resumoTextoServico;
+
+    public CacaPalavraController (IResumoTextoServico resumoTextoServico)
+    {
+        _resumoTextoServico = resumoTextoServico;
+    }
 
     [HttpGet]
     public SaidaCacaPalavrasDto Get()
@@ -18,8 +25,7 @@ public class CacaPalavraController : ControllerBase
     [HttpPost]
     public SaidaCacaPalavrasDto Post([FromBody] EntradaCacaPalavrasDto entrada)
     {
-        var saida = new SaidaCacaPalavrasDto { Texto = entrada.Texto };
-        saida.NumeroDePalavras = entrada.Texto.Split(' ').Length;
+        var saida = _resumoTextoServico.GetResumoTexto(entrada);
         return saida; 
     }
 }
