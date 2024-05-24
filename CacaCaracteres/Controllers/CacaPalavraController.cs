@@ -1,5 +1,5 @@
 ﻿using CacaCaracteres.Dto;
-using CacaCaracteres.Interfaces;
+using CacaCaracteres.Servicos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Controllers;

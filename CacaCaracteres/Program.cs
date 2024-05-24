@@ -1,4 +1,3 @@
-using CacaCaracteres.Interfaces;
 using CacaCaracteres.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);

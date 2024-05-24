@@ -1,16 +1,14 @@
 ﻿using CacaCaracteres.Dto;
 using CacaCaracteres.ExtensoesCaracteres;
-using CacaCaracteres.Interfaces;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CacaCaracteres.Servicos
 {
     public class ResumoTextoServico : IResumoTextoServico
     {
-        public SaidaCacaPalavrasDto GetResumoTexto(EntradaCacaPalavrasDto entrada)
+        public SaidaCacaPalavrasDto GetResumoTexto(EntradaCacaPalavrasDto textoEntrada)
         {
-            if (string.IsNullOrEmpty(entrada.Texto))
+            if (string.IsNullOrEmpty(textoEntrada.Texto))
             {
                 var saidaVazia = new SaidaCacaPalavrasDto
                 {
@@ -19,17 +17,17 @@ namespace CacaCaracteres.Servicos
                 return saidaVazia;
             }
 
-            var entradaNormalizada = entrada.Texto.ToLower().Normalize(NormalizationForm.FormD);
+            var entradaNormalizada = textoEntrada.Texto.ToLower().Normalize(NormalizationForm.FormD);
 
             var saida = new SaidaCacaPalavrasDto
             {
-                Texto = entrada.Texto,
+                Texto = textoEntrada.Texto,
                 NumeroDePalavras = entradaNormalizada.Split(' ').Length,
                 NumeroDeLetras = entradaNormalizada.Count( x => x == x.RetornaLetra()),
                 NumeroDeVogais = entradaNormalizada.Count( x => x == x.RetornaVogal()),
                 NumeroDeConsonantes = entradaNormalizada.Count(x => x == x.RetornaConsoante()),
-                NumeroDeMaisculas = entrada.Texto.Count(char.IsUpper),
-                NumeroDeMinuscolas = entrada.Texto.Count( char.IsLower)
+                NumeroDeMaisculas = textoEntrada.Texto.Count(char.IsUpper),
+                NumeroDeMinuscolas = textoEntrada.Texto.Count( char.IsLower)
             };
             return saida;
         }
