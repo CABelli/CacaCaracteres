@@ -1,6 +1,8 @@
 ﻿using CacaCaracteres.Dto;
 using CacaCaracteres.ExtensoesCaracteres;
 using CacaCaracteres.Interfaces;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CacaCaracteres.Servicos
 {
@@ -16,12 +18,18 @@ namespace CacaCaracteres.Servicos
                 };
                 return saidaVazia;
             }
+
+            var entradaNormalizada = entrada.Texto.ToLower().Normalize(NormalizationForm.FormD);
+
             var saida = new SaidaCacaPalavrasDto
             {
                 Texto = entrada.Texto,
-                NumeroDePalavras = entrada.Texto.Split(' ').Length,
-                NumeroDeLetras = entrada.Texto.Count( x => x == x.RetornaLetra()),
-                NumeroDeVogais = entrada.Texto.Count( x => x == x.RetornaVogal())
+                NumeroDePalavras = entradaNormalizada.Split(' ').Length,
+                NumeroDeLetras = entradaNormalizada.Count( x => x == x.RetornaLetra()),
+                NumeroDeVogais = entradaNormalizada.Count( x => x == x.RetornaVogal()),
+                NumeroDeConsonantes = entradaNormalizada.Count(x => x == x.RetornaConsoante()),
+                NumeroDeMaisculas = entrada.Texto.Count(char.IsUpper),
+                NumeroDeMinuscolas = entrada.Texto.Count( char.IsLower)
             };
             return saida;
         }
