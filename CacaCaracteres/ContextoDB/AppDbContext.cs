@@ -1,5 +1,12 @@
-﻿//namespace CacaCaracteres.ContextoDB;
+﻿using CacaCaracteres.Modelo;
+using Microsoft.EntityFrameworkCore;
 
-//public class AppDbContext : DbContext
-//{
-//}
+namespace CacaCaracteres.ContextoDB;
+
+public class AppDataBaseContext : DbContext
+{
+    public AppDataBaseContext(DbContextOptions<AppDataBaseContext> options) : base(options) { }
+
+    public DbSet<LivroTexto> LivroTexto { get; set; }
+
+}
