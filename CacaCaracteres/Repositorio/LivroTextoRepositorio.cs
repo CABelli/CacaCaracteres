@@ -1,11 +1,11 @@
 ﻿using CacaCaracteres.Modelo;
+using Microsoft.EntityFrameworkCore;
 
 namespace CacaCaracteres.Repositorio;
 
-public class LivroTextoRepositorio : ILivroTextoRepositorio
+public class LivroTextoRepositorio : GenericoRepositorio<LivroTexto>, ILivroTextoRepositorio
 {
-    public Task Inclusao(LivroTexto livroTexto)
+    public LivroTextoRepositorio(DbContext context) : base (context) 
     {
-        throw new NotImplementedException();
     }
 }

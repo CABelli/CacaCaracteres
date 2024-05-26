@@ -1,4 +1,5 @@
 using CacaCaracteres.ContextoDB;
+using CacaCaracteres.Repositorio;
 using CacaCaracteres.Servicos;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddScoped<IResumoTextoServico, ResumoTextoServico>();
+builder.Services.AddScoped<ILivroTextoRepositorio, LivroTextoRepositorio>();
+builder.Services.AddScoped<ILivroTextoServico, LivroTextoServico>();
 
 IConfiguration configuration = builder.Configuration;
 builder.Services.AddDbContext<AppDataBaseContext>(options =>

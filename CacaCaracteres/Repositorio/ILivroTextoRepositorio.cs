@@ -2,7 +2,6 @@
 
 namespace CacaCaracteres.Repositorio;
 
-public interface ILivroTextoRepositorio
+public interface ILivroTextoRepositorio : IGenericoRepositorio<LivroTexto>
 {
-    Task Inclusao(LivroTexto livroTexto);
 }

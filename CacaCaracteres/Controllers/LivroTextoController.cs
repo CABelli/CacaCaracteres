@@ -15,6 +15,13 @@ public class LivroTextoController : Controller
         _livroTextoServico = livroTextoServico;
     }
 
+    [HttpGet]
+    public SaidaLivroTextoDto LeituraLivroTexto(int codigoTexto)
+    {
+        var saidaLivroTextoDto = _livroTextoServico.(codigoTexto);
+        return saidaLivroTextoDto;
+    }
+
     [HttpPost]
     public SaidaLivroTextoDto InclusaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
     {

@@ -2,5 +2,6 @@
 
 public class EntradaLivroTextoDto
 {
-    public int  codigo {  get; set; }
+    public int CodigoTexto {  get; set; }
+    public string Texto { get; set; }
 }
