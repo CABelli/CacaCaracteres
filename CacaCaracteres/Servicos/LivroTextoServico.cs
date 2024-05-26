@@ -13,13 +13,11 @@ namespace CacaCaracteres.Servicos
             _livroTextoRepositorio = livroTextoRepositorio;
         }
 
-        public async Task<SaidaLivroTextoDto> LerLivrotexto(int codigoTexto)
+        public Task<SaidaLivroTextoDto> LerLivrotexto(int codigoTexto)
         {
-            var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto = codigoTexto);
-
-            var saidaLivroTextoDto = new SaidaLivroTextoDto() {  CodigoLivro = livroTexto., Texto = }
-
-            return saidaLivroTextoDto;
+            var livroTexto = _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
+            var saidaLivroTextoDto = new SaidaLivroTextoDto() { CodigoLivro = codigoTexto, Texto = livroTexto.Result.Texto };
+            return Task.FromResult(saidaLivroTextoDto);
         }
 
         public Task IncluiLivro(EntradaLivroTextoDto entrada)

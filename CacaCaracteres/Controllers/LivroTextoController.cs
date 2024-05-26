@@ -16,9 +16,9 @@ public class LivroTextoController : Controller
     }
 
     [HttpGet]
-    public SaidaLivroTextoDto LeituraLivroTexto(int codigoTexto)
+    public Task<SaidaLivroTextoDto> LeituraLivroTexto(int codigoTexto)
     {
-        var saidaLivroTextoDto = _livroTextoServico.(codigoTexto);
+        var saidaLivroTextoDto = _livroTextoServico.LerLivrotexto(codigoTexto);
         return saidaLivroTextoDto;
     }
 

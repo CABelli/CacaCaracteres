@@ -6,5 +6,5 @@ public interface ILivroTextoServico
 {
     Task IncluiLivro(EntradaLivroTextoDto entrada);
 
-    SaidaCacaPalavrasDto LerLivrotexto(int codigoTexto);
+    Task<SaidaLivroTextoDto> LerLivrotexto(int codigoTexto);
 }
