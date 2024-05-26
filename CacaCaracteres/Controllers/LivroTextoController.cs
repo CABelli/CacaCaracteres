@@ -26,7 +26,6 @@ public class LivroTextoController : Controller
     public SaidaLivroTextoDto InclusaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
     {
         _livroTextoServico.IncluiLivro(entrada);
-
         return new SaidaLivroTextoDto();
     }
 }
