@@ -7,5 +7,5 @@ public interface IGenericoRepositorio<T> where T : Base
 {
     void Create(T entity);
 
-    T WhereFirstAsync(Expression<Func<T, bool>> expression);
+    Task<T> WhereFirstAsync(Expression<Func<T, bool>> expression);
 }

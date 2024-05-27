@@ -21,9 +21,9 @@ namespace CacaCaracteres.Repositorio
             _dbContext.SaveChanges();
         }
 
-        public T WhereFirstAsync(Expression<Func<T, bool>> expression)
+        public async Task<T> WhereFirstAsync(Expression<Func<T, bool>> expression)
         {
-            return _dbSet.FirstOrDefault(expression);
+            return await _dbSet.FirstOrDefaultAsync(expression);
         }
     }
 }

@@ -15,7 +15,8 @@ namespace CacaCaracteres.Servicos
 
         public async Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigoTexto)
         {
-            var livroTexto = _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
+            var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
+            if (livroTexto == null) return new SaidaLivroTextoDto();
             var saidaLivroTextoDto = new SaidaLivroTextoDto() { CodigoLivro = codigoTexto, Texto = livroTexto.Texto };
             return saidaLivroTextoDto;
         }
@@ -23,7 +24,7 @@ namespace CacaCaracteres.Servicos
         public Task IncluiLivro(EntradaLivroTextoDto entrada)
         {
             var livroTextoDb = _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
-            if (livroTextoDb != null) throw new NotImplementedException("Ja existe");
+            if (livroTextoDb.Result != null) throw new NotImplementedException("Ja existe");
             var livroTexto = new LivroTexto { CodigoTexto = entrada.CodigoTexto, Texto = entrada.Texto };
             _livroTextoRepositorio.Create(livroTexto);
             return Task.CompletedTask;
