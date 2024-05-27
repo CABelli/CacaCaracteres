@@ -16,10 +16,10 @@ public class LivroTextoController : Controller
     }
 
     [HttpGet]
-    public Task<SaidaLivroTextoDto> LeituraLivroTexto(int codigoTexto)
+    public async Task<ActionResult<SaidaLivroTextoDto>> LeituraLivroTexto(int codigoTexto)
     {
-        var saidaLivroTextoDto = _livroTextoServico.LerLivrotexto(codigoTexto);
-        return saidaLivroTextoDto;
+        var saidaLivroTextoDto = await _livroTextoServico.LerLivrotextoAsync(codigoTexto);
+        return Ok(saidaLivroTextoDto);
     }
 
     [HttpPost]

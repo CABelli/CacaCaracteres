@@ -15,13 +15,6 @@ public class CacaPalavraController : ControllerBase
         _resumoTextoServico = resumoTextoServico;
     }
 
-    [HttpGet]
-    public SaidaCacaPalavrasDto Get()
-    {
-        var saida = new SaidaCacaPalavrasDto { Texto = "Frase 01", NumeroDePalavras = 0 };
-        return saida;
-    }
-
     [HttpPost]
     public SaidaCacaPalavrasDto Post([FromBody] EntradaCacaPalavrasDto entrada)
     {
