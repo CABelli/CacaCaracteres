@@ -1,6 +1,8 @@
 ﻿using CacaCaracteres.Dto;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Servicos
 {
@@ -21,13 +23,14 @@ namespace CacaCaracteres.Servicos
             return saidaLivroTextoDto;
         }
 
-        public Task IncluiLivro(EntradaLivroTextoDto entrada)
+        public async Task IncluirLivroAsync(EntradaLivroTextoDto entrada)
         {
-            var livroTextoDb = _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
-            if (livroTextoDb.Result != null) throw new NotImplementedException("Ja existe");
+            var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
+            if (livroTextoDb != null) // return Task.FromException();
+               throw new NotImplementedException("Ja existe");
             var livroTexto = new LivroTexto { CodigoTexto = entrada.CodigoTexto, Texto = entrada.Texto };
             _livroTextoRepositorio.Create(livroTexto);
-            return Task.CompletedTask;
+            await Task.Yield();
         }
     }
 }

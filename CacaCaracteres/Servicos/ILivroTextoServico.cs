@@ -1,10 +1,11 @@
 ﻿using CacaCaracteres.Dto;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Servicos;
 
 public interface ILivroTextoServico
 {
-    Task IncluiLivro(EntradaLivroTextoDto entrada);
+    Task IncluirLivroAsync(EntradaLivroTextoDto entrada);
 
     Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigoTexto);
 }

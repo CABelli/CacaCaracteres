@@ -23,9 +23,9 @@ public class LivroTextoController : Controller
     }
 
     [HttpPost]
-    public SaidaLivroTextoDto InclusaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
+    public async Task<ActionResult> InclusaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
     {
-        _livroTextoServico.IncluiLivro(entrada);
-        return new SaidaLivroTextoDto();
+        await _livroTextoServico.IncluirLivroAsync(entrada);
+        return Ok();
     }
 }
