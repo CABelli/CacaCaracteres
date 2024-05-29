@@ -1,8 +1,6 @@
 ﻿using CacaCaracteres.Dto;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 
 namespace CacaCaracteres.Servicos
 {
@@ -26,10 +24,33 @@ namespace CacaCaracteres.Servicos
         public async Task IncluirLivroAsync(EntradaLivroTextoDto entrada)
         {
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
-            if (livroTextoDb != null) // return Task.FromException();
-               throw new NotImplementedException("Ja existe");
+            if (livroTextoDb != null)
+                // criar FluentValidation / ErrorsNotFoundException
+                throw new Exception(String.Format("O codigo texto {0} já é cadastrado.", entrada.CodigoTexto));                    
             var livroTexto = new LivroTexto { CodigoTexto = entrada.CodigoTexto, Texto = entrada.Texto };
             _livroTextoRepositorio.Create(livroTexto);
+            await Task.Yield();
+        }
+
+        public async Task ExcluirLivroAsync(int codigoTexto)
+        {
+            var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
+            if (livroTextoDb == null)
+                // criar FluentValidation / ErrorsNotFoundException
+                throw new Exception(String.Format("O codigo texto {0} não encontrado.", codigoTexto));
+            _livroTextoRepositorio.Delete(livroTextoDb);
+            await Task.Yield();
+        }
+
+        public async Task AlterarLivroAsync(EntradaLivroTextoDto entrada)
+        {
+            var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
+            if (livroTextoDb == null)
+                // criar FluentValidation / ErrorsNotFoundException
+                throw new Exception(String.Format("O codigo texto {0} não encontrado.", entrada.CodigoTexto));
+
+            livroTextoDb.Texto = entrada.Texto;
+            _livroTextoRepositorio.Update(livroTextoDb);
             await Task.Yield();
         }
     }

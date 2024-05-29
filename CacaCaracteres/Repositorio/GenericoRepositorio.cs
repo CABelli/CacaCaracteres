@@ -25,5 +25,17 @@ namespace CacaCaracteres.Repositorio
         {
             return await _dbSet.FirstOrDefaultAsync(expression);
         }
+
+        public void Delete(T entity)
+        {
+            _dbSet.Remove(entity);
+            _dbContext.SaveChanges();
+        }
+
+        public void Update(T entity)
+        {
+            _dbSet.Update(entity);
+            _dbContext.SaveChanges();
+        }
     }
 }

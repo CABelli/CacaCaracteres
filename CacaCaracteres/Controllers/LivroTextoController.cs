@@ -28,4 +28,18 @@ public class LivroTextoController : Controller
         await _livroTextoServico.IncluirLivroAsync(entrada);
         return Ok();
     }
+
+    [HttpDelete]
+    public async Task<ActionResult> ExclusaoLivroTexto(int codigotexto)
+    {
+        await _livroTextoServico.ExcluirLivroAsync(codigotexto);
+        return Ok();
+    }
+
+    [HttpPut]
+    public async Task<ActionResult> AlteracaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
+    {
+        await _livroTextoServico.AlterarLivroAsync(entrada);
+        return Ok();
+    }
 }
