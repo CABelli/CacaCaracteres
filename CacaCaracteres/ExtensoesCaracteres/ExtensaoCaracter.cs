@@ -20,4 +20,10 @@ public static class ExtensaoCaracter
             RetornaVogal(caracter) == null ) return caracter;
         return null;
     }
+
+    public static char? RetConsoanteEspaco(this char caracter) 
+    {
+        if (caracter.RetornaLetra() is not null || caracter.Equals(' ')) return caracter;
+        return null;
+    }
 }

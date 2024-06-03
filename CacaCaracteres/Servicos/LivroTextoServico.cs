@@ -17,7 +17,12 @@ namespace CacaCaracteres.Servicos
         {
             var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
             if (livroTexto == null) return new SaidaLivroTextoDto();
-            var saidaLivroTextoDto = new SaidaLivroTextoDto() { CodigoLivro = codigoTexto, Texto = livroTexto.Texto };
+            var saidaLivroTextoDto = new SaidaLivroTextoDto()
+            {
+                CodigoLivro = codigoTexto,
+                Texto = livroTexto.Texto,
+                NumeroDePalavras = livroTexto.Texto.Split(' ').Count()
+            };
             return saidaLivroTextoDto;
         }
 
