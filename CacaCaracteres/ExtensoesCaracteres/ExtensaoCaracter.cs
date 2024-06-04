@@ -21,7 +21,7 @@ public static class ExtensaoCaracter
         return null;
     }
 
-    public static char? RetConsoanteEspaco(this char caracter) 
+    public static char? RetornaConsoanteEspaco(this char caracter) 
     {
         if (caracter.RetornaLetra() is not null || caracter.Equals(' ')) return caracter;
         return null;
