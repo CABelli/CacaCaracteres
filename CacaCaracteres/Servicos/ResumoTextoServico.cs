@@ -18,18 +18,24 @@ namespace CacaCaracteres.Servicos
                 return saidaVazia;
             }
 
-            var entradaNormalizada = textoEntrada.Texto.ToLower().Normalize(NormalizationForm.FormD).Replace("  ", " ");
-            Console.WriteLine("A - " + entradaNormalizada.Split(' ').Length);
+            //var entradaNormalizada = textoEntrada.Texto.ToLower().Normalize(NormalizationForm.FormD).Replace("  ", " ");
+            var entradaNormalizada = textoEntrada.Texto.ToLower().Normalize(NormalizationForm.FormD);
+            //var soLetras = string.Empty;
+            //entradaNormalizada.ToList().ForEach(c => { soLetras += c.RetornaConsoanteEspaco(); });
 
             var soLetras = string.Empty;
-            entradaNormalizada.ToList().ForEach(c => { soLetras += c.RetornaConsoanteEspaco(); });
-            Console.WriteLine("B - " + soLetras.Replace("  ", " ").Split(' ').Length);
+            entradaNormalizada.ToList().ForEach(c => { 
+                soLetras += c.RetornaConsoanteEspaco(); 
+                soLetras = soLetras.Replace("  ", " "); 
+            });
+            Console.WriteLine(soLetras.Trim().Split().Length);
 
             var saida = new SaidaCacaPalavrasDto
             {
                 Texto = textoEntrada.Texto,
-                //NumeroDePalavras = entradaNormalizada.Split(' ').Length,
-                NumeroDePalavras = soLetras.Replace("  ", " ").Split(' ').Length,
+                //NumeroDePalavras = soLetras.Replace("  ", " ").TrimEnd(' ').Split(' ').Length,
+                //NumeroDePalavras = soLetras.Trim().Replace("  ", " ").Split(' ').Length,
+                NumeroDePalavras = soLetras.Trim().Split(' ').Length,
                 NumeroDeLetras = entradaNormalizada.Count( x => x == x.RetornaLetra()),
                 NumeroDeVogais = entradaNormalizada.Count( x => x == x.RetornaVogal()),
                 NumeroDeConsonantes = entradaNormalizada.Count(x => x == x.RetornaConsoante()),
