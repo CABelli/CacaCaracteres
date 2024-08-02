@@ -8,6 +8,8 @@ public interface ILivroTextoServico
 
     Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigoTexto);
 
+    Task<List<SaidaLivroTextoDto>> LerListaLivroTextoAsync();
+
     Task ExcluirLivroAsync(int codigoTexto);
 
     Task AlterarLivroAsync(EntradaLivroTextoDto entrada);

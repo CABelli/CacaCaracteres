@@ -13,6 +13,25 @@ namespace CacaCaracteres.Servicos
             _livroTextoRepositorio = livroTextoRepositorio;
         }
 
+        public async Task<List<SaidaLivroTextoDto>> LerListaLivroTextoAsync()
+        {
+            var listLivroTexto = await _livroTextoRepositorio.GetAllAsync();
+
+            var listSaidaLivroTextoDdto = new List<SaidaLivroTextoDto>();
+
+            if (listLivroTexto != null)
+                listLivroTexto.OrderBy(x => x.CodigoTexto).ToList().ForEach(y => listSaidaLivroTextoDdto
+                    .Add(new SaidaLivroTextoDto() {
+                        CodigoLivro = y.CodigoTexto,
+                        Texto = y.Texto,
+                        NumeroDePalavras = 5 }));
+
+            //var listSaidaLivroTextoDdto = new List<SaidaLivroTextoDto> {
+            //    new SaidaLivroTextoDto (){ CodigoLivro = 5, Texto = "a", NumeroDePalavras = 4 } };
+
+            return listSaidaLivroTextoDdto;
+        }
+
         public async Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigoTexto)
         {
             var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);

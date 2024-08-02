@@ -9,6 +9,8 @@ public interface IGenericoRepositorio<T> where T : Base
 
     Task<T> WhereFirstAsync(Expression<Func<T, bool>> expression);
 
+    Task<List<T>> GetAllAsync();
+
     void Delete(T entity);
 
     void Update(T entity);
