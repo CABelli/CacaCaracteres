@@ -1,6 +1,8 @@
 ﻿using CacaCaracteres.Dto;
+using CacaCaracteres.ExtensoesCaracteres;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
+using System.Text;
 
 namespace CacaCaracteres.Servicos
 {
@@ -24,10 +26,13 @@ namespace CacaCaracteres.Servicos
                     .Add(new SaidaLivroTextoDto() {
                         CodigoLivro = y.CodigoTexto,
                         Texto = y.Texto,
-                        NumeroDePalavras = 5 }));
-
-            //var listSaidaLivroTextoDdto = new List<SaidaLivroTextoDto> {
-            //    new SaidaLivroTextoDto (){ CodigoLivro = 5, Texto = "a", NumeroDePalavras = 4 } };
+                        NumeroDePalavras = NumeroDePalavrasCalc(y.Texto),
+                        NumeroDeLetras = EntradaNormalizada(y.Texto).Count(x => x == x.RetornaLetra()),
+                        NumeroDeVogais = EntradaNormalizada(y.Texto).Count(x => x == x.RetornaVogal()),
+                        NumeroDeConsonantes = EntradaNormalizada(y.Texto).Count(x => x == x.RetornaConsoante()),
+                        NumeroDeMaisculas = y.Texto.Count(char.IsUpper),
+                        NumeroDeMinuscolas = y.Texto.Count(char.IsLower)
+                    }));
 
             return listSaidaLivroTextoDdto;
         }
@@ -40,7 +45,12 @@ namespace CacaCaracteres.Servicos
             {
                 CodigoLivro = codigoTexto,
                 Texto = livroTexto.Texto,
-                NumeroDePalavras = livroTexto.Texto.Split(' ').Count()
+                NumeroDePalavras = NumeroDePalavrasCalc(livroTexto.Texto),
+                NumeroDeLetras = EntradaNormalizada(livroTexto.Texto).Count(x => x == x.RetornaLetra()),
+                NumeroDeVogais = EntradaNormalizada(livroTexto.Texto).Count(x => x == x.RetornaVogal()),
+                NumeroDeConsonantes = EntradaNormalizada(livroTexto.Texto).Count(x => x == x.RetornaConsoante()),
+                NumeroDeMaisculas = livroTexto.Texto.Count(char.IsUpper),
+                NumeroDeMinuscolas = livroTexto.Texto.Count(char.IsLower)
             };
             return saidaLivroTextoDto;
         }
@@ -76,6 +86,22 @@ namespace CacaCaracteres.Servicos
             livroTextoDb.Texto = entrada.Texto;
             _livroTextoRepositorio.Update(livroTextoDb);
             await Task.Yield();
+        }
+
+        public string EntradaNormalizada(string textoEntrada)
+        {
+            return textoEntrada.ToLower().Normalize(NormalizationForm.FormD);
+        }
+
+        public int NumeroDePalavrasCalc(string textoEntrada)
+        {
+            var soLetras = string.Empty;
+            EntradaNormalizada(textoEntrada).ToList().ForEach(c => {
+                soLetras += c.RetornaConsoanteEspaco();
+                soLetras = soLetras.Replace("  ", " ");
+            });
+
+            return soLetras.Trim().Split(' ').Length;
         }
     }
 }
