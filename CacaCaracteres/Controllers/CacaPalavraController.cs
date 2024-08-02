@@ -33,5 +33,13 @@ public class CacaPalavraController : ControllerBase
         
         return saida;
     }
+
+    [HttpPost]
+    [Route("Pessoa")]
+    public bool post(int versionCalculate)
+    {
+        var saida = _validationCPF.Validation02GC(versionCalculate);
+        return saida;
+    }
 }
 
