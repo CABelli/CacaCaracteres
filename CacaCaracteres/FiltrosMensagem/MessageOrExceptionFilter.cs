@@ -34,7 +34,15 @@ public class MessageOrExceptionFilter : IExceptionFilter
         if (context.Exception is ErrorsNotFoundException)
         {
             var notFoundErros = context.Exception as ErrorsNotFoundException;
-            notFoundErros?.MensagensDeErro.ForEach(msg => _logger.LogInformation(" Aqui --- " + msg));
+            notFoundErros?.MensagensDeErro.ForEach(msg => _logger.LogInformation(" Aqui 01 --- " + msg));
+        }
+        else
+        {
+            if (context.Exception is ErrorsFoundException)
+            {
+                var foundErros = context.Exception as ErrorsFoundException;
+                foundErros?.MensagensDeErro.ForEach(msg => _logger.LogInformation(" Aqui 02 ---" + msg));
+            }
         }
     }
 
@@ -44,6 +52,13 @@ public class MessageOrExceptionFilter : IExceptionFilter
         {
             TratarErrorsNotFoundException(context);
         }
+        else
+        {
+            if (context.Exception is ErrorsFoundException)
+            {
+                TratarErrosFoundException(context);
+            }
+        }
     }
 
     private static void TratarErrorsNotFoundException(ExceptionContext context)
@@ -51,6 +66,14 @@ public class MessageOrExceptionFilter : IExceptionFilter
         var erros = context.Exception as ErrorsNotFoundException;
         context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
         context.HttpContext.Response.Headers.Add("Reason", HttpUtility.HtmlEncode(erros.MensagensDeErro.FirstOrDefault()));
+        context.Result = new ObjectResult("");
+    }
+
+    private static void TratarErrosFoundException(ExceptionContext context)
+    {
+        var errors = context.Exception as ErrorsFoundException;
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
+        context.HttpContext.Response.Headers.Add("Reason", HttpUtility.HtmlEncode(errors.MensagensDeErro.FirstOrDefault()));
         context.Result = new ObjectResult("");
     }
 

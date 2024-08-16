@@ -62,7 +62,8 @@ namespace CacaCaracteres.Servicos
             if (livroTextoDb != null)
                 // criar FluentValidation / ErrorsNotFoundException
                 //throw new Exception(String.Format("O codigo texto {0} já é cadastrado.", entrada.CodigoTexto));
-                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} ja he cadastrado.", entrada.CodigoTexto) });
+                throw new ErrorsFoundException(new List<string>() { String.Format("O codigo texto {0} ja he cadastrado.", entrada.CodigoTexto) });
+            
             var livroTexto = new LivroTexto { CodigoTexto = entrada.CodigoTexto, Texto = entrada.Texto };
             _livroTextoRepositorio.Create(livroTexto);
             await Task.Yield();
@@ -73,7 +74,9 @@ namespace CacaCaracteres.Servicos
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
             if (livroTextoDb == null)
                 // criar FluentValidation / ErrorsNotFoundException
-                throw new Exception(String.Format("O codigo texto {0} não encontrado.", codigoTexto));
+                //throw new Exception(String.Format("O codigo texto {0} não encontrado.", codigoTexto));
+                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", codigoTexto) });
+            
             _livroTextoRepositorio.Delete(livroTextoDb);
             await Task.Yield();
         }
@@ -83,7 +86,8 @@ namespace CacaCaracteres.Servicos
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb == null)
                 // criar FluentValidation / ErrorsNotFoundException
-                throw new Exception(String.Format("O codigo texto {0} não encontrado.", entrada.CodigoTexto));
+                //throw new Exception(String.Format("O codigo texto {0} não encontrado.", entrada.CodigoTexto));
+                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", entrada.CodigoTexto) });
 
             livroTextoDb.Texto = entrada.Texto;
             _livroTextoRepositorio.Update(livroTextoDb);
