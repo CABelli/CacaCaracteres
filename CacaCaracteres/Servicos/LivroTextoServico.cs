@@ -1,4 +1,5 @@
 ﻿using CacaCaracteres.Dto;
+using CacaCaracteres.ExceptionBase;
 using CacaCaracteres.ExtensoesCaracteres;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
@@ -60,7 +61,8 @@ namespace CacaCaracteres.Servicos
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb != null)
                 // criar FluentValidation / ErrorsNotFoundException
-                throw new Exception(String.Format("O codigo texto {0} já é cadastrado.", entrada.CodigoTexto));                    
+                //throw new Exception(String.Format("O codigo texto {0} já é cadastrado.", entrada.CodigoTexto));
+                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} ja he cadastrado.", entrada.CodigoTexto) });
             var livroTexto = new LivroTexto { CodigoTexto = entrada.CodigoTexto, Texto = entrada.Texto };
             _livroTextoRepositorio.Create(livroTexto);
             await Task.Yield();

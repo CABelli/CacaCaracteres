@@ -1,4 +1,5 @@
 using CacaCaracteres.ContextoDB;
+using CacaCaracteres.FiltrosMensagem;
 using CacaCaracteres.Repositorio;
 using CacaCaracteres.Servicos;
 using CacaCaracteres.ServicosCPF;
@@ -24,6 +25,8 @@ builder.Services.AddScoped<DbContext, AppDataBaseContext>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMvc(options => options.Filters.Add(typeof(MessageOrExceptionFilter)));
 
 var app = builder.Build();
 
