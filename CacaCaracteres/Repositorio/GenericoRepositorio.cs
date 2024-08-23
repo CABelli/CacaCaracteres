@@ -31,6 +31,11 @@ namespace CacaCaracteres.Repositorio
             return await _dbSet.AsQueryable().ToListAsync<T>();
         }
 
+        public async Task<List<T>> WhereAllAsync(Expression<Func<T, bool>> expression)
+        {
+            return await _dbSet.AsQueryable().Where(expression).ToListAsync<T>();                
+        }
+
         public void Delete(T entity)
         {
             _dbSet.Remove(entity);

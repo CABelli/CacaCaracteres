@@ -56,6 +56,29 @@ namespace CacaCaracteres.Servicos
             return saidaLivroTextoDto;
         }
 
+        public async Task<List<SaidaLivroTextoDto>> LerListaFiltroLivroTextoAsync(int codigoTexto)
+        {
+            var listLivroTexto = await _livroTextoRepositorio.WhereAllAsync(x => x.CodigoTexto > codigoTexto);
+
+            var listSaidaLivroTextoDdto = new List<SaidaLivroTextoDto>();
+
+            if (listLivroTexto != null)
+                listLivroTexto.OrderBy(x => x.CodigoTexto).ToList().ForEach(y => listSaidaLivroTextoDdto
+                    .Add(new SaidaLivroTextoDto()
+                    {
+                        CodigoLivro = y.CodigoTexto,
+                        Texto = y.Texto,
+                        NumeroDePalavras = NumeroDePalavrasCalc(y.Texto),
+                        NumeroDeLetras = EntradaNormalizada(y.Texto).Count(x => x == x.RetornaLetra()),
+                        NumeroDeVogais = EntradaNormalizada(y.Texto).Count(x => x == x.RetornaVogal()),
+                        NumeroDeConsonantes = EntradaNormalizada(y.Texto).Count(x => x == x.RetornaConsoante()),
+                        NumeroDeMaisculas = y.Texto.Count(char.IsUpper),
+                        NumeroDeMinuscolas = y.Texto.Count(char.IsLower)
+                    }));
+
+            return listSaidaLivroTextoDdto;
+        }
+
         public async Task IncluirLivroAsync(EntradaLivroTextoDto entrada)
         {
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);

@@ -24,6 +24,14 @@ public class LivroTextoController : Controller
     }
 
     [HttpGet]
+    [Route("ListaFiltro")]
+    public async Task<ActionResult<List<SaidaLivroTextoDto>>> LeituraListaFiltroLivroTexto(int codigoTexto)
+    {
+        var listaSaidaLivrotextoDto = await _livroTextoServico.LerListaFiltroLivroTextoAsync(codigoTexto);
+        return Ok(listaSaidaLivrotextoDto);
+    }
+
+    [HttpGet]
     public async Task<ActionResult<SaidaLivroTextoDto>> LeituraLivroTexto(int codigoTexto)
     {
         var saidaLivroTextoDto = await _livroTextoServico.LerLivrotextoAsync(codigoTexto);
