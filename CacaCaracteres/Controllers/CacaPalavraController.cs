@@ -18,25 +18,25 @@ public class CacaPalavraController : ControllerBase
         _validationCPF = validationCPF;
     }
 
-    [HttpPost]
-    public SaidaCacaPalavrasDto Post([FromBody] EntradaCacaPalavrasDto entrada)
+    [HttpGet]
+    public SaidaCacaPalavrasDto Get([FromQuery] EntradaCacaPalavrasDto entrada)
     {
         var saida = _resumoTextoServico.GetResumoTexto(entrada);
         return saida;
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("CPF")]
-    public bool Post(int versionCalculate)
+    public bool Get(int versionCalculate)
     {
         var saida = _validationCPF.ValidationGC(versionCalculate);
         
         return saida;
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("Pessoa")]
-    public bool post(int versionCalculate)
+    public bool GetPessoa(int versionCalculate)
     {
         var saida = _validationCPF.Validation02GC(versionCalculate);
         return saida;
