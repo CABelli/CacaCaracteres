@@ -2,7 +2,6 @@ using CacaCaracteres.ContextoDB;
 using CacaCaracteres.FiltrosMensagem;
 using CacaCaracteres.Repositorio;
 using CacaCaracteres.Servicos;
-using CacaCaracteres.ServicosCPF;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +11,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IResumoTextoServico, ResumoTextoServico>();
 builder.Services.AddScoped<ILivroTextoRepositorio, LivroTextoRepositorio>();
 builder.Services.AddScoped<ILivroTextoServico, LivroTextoServico>();
-builder.Services.AddScoped<IValidationCPF, ValidationCPF>();
 
 IConfiguration configuration = builder.Configuration;
 builder.Services.AddDbContext<AppDataBaseContext>(options =>
