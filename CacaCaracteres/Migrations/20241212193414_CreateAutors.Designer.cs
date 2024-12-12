@@ -4,6 +4,7 @@ using CacaCaracteres.ContextoDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CacaCaracteres.Migrations
 {
     [DbContext(typeof(AppDataBaseContext))]
-    partial class AppDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241212193414_CreateAutors")]
+    partial class CreateAutors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,9 +50,6 @@ namespace CacaCaracteres.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("AutorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("CodigoTexto")
                         .HasColumnType("int");
 
@@ -59,23 +59,7 @@ namespace CacaCaracteres.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AutorId");
-
                     b.ToTable("LivroTexto");
-                });
-
-            modelBuilder.Entity("CacaCaracteres.Modelo.LivroTexto", b =>
-                {
-                    b.HasOne("CacaCaracteres.Modelo.Autor", "Autor")
-                        .WithMany("LivroTexto")
-                        .HasForeignKey("AutorId");
-
-                    b.Navigation("Autor");
-                });
-
-            modelBuilder.Entity("CacaCaracteres.Modelo.Autor", b =>
-                {
-                    b.Navigation("LivroTexto");
                 });
 #pragma warning restore 612, 618
         }

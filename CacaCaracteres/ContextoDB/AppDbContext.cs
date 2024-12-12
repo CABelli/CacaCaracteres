@@ -9,4 +9,12 @@ public class AppDataBaseContext : DbContext
 
     public DbSet<LivroTexto> LivroTexto { get; set; }
 
+    public DbSet<Autor> Autors { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        builder.ApplyConfigurationsFromAssembly(typeof(AppDataBaseContext).Assembly);
+    }
+
 }

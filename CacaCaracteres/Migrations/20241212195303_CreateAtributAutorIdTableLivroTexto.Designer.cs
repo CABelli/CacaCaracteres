@@ -4,6 +4,7 @@ using CacaCaracteres.ContextoDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CacaCaracteres.Migrations
 {
     [DbContext(typeof(AppDataBaseContext))]
-    partial class AppDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241212195303_CreateAtributAutorIdTableLivroTexto")]
+    partial class CreateAtributAutorIdTableLivroTexto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
