@@ -38,13 +38,13 @@ namespace CacaCaracteres.Servicos
             return listSaidaLivroTextoDdto;
         }
 
-        public async Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigoTexto)
+        public async Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigo)
         {
-            var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
+            var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigo);
             if (livroTexto == null) return new SaidaLivroTextoDto();
             var saidaLivroTextoDto = new SaidaLivroTextoDto()
             {
-                CodigoLivro = codigoTexto,
+                CodigoLivro = codigo,
                 Texto = livroTexto.Texto,
                 NumeroDePalavras = NumeroDePalavrasCalc(livroTexto.Texto),
                 NumeroDeLetras = EntradaNormalizada(livroTexto.Texto).Count(x => x == x.RetornaLetra()),
@@ -56,9 +56,9 @@ namespace CacaCaracteres.Servicos
             return saidaLivroTextoDto;
         }
 
-        public async Task<List<SaidaLivroTextoDto>> LerListaFiltroLivroTextoAsync(int codigoTexto)
+        public async Task<List<SaidaLivroTextoDto>> LerListaFiltroLivroTextoAsync(int codigoFiltro)
         {
-            var listLivroTexto = await _livroTextoRepositorio.WhereAllAsync(x => x.CodigoTexto == codigoTexto);
+            var listLivroTexto = await _livroTextoRepositorio.WhereAllAsync(x => x.CodigoTexto == codigoFiltro);
 
             var listSaidaLivroTextoDdto = new List<SaidaLivroTextoDto>();
 
@@ -92,13 +92,13 @@ namespace CacaCaracteres.Servicos
             await Task.Yield();
         }
 
-        public async Task ExcluirLivroAsync(int codigoTexto)
+        public async Task ExcluirLivroAsync(int codigo)
         {
-            var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigoTexto);
+            var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigo);
             if (livroTextoDb == null)
                 // criar FluentValidation / ErrorsNotFoundException
-                //throw new Exception(String.Format("O codigo texto {0} não encontrado.", codigoTexto));
-                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", codigoTexto) });
+                //throw new Exception(String.Format("O codigo texto {0} não encontrado.", codigo));
+                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", codigo) });
             
             _livroTextoRepositorio.Delete(livroTextoDb);
             await Task.Yield();

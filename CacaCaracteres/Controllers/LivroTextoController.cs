@@ -16,46 +16,31 @@ public class LivroTextoController : Controller
     }
 
     [HttpGet]
-    [Route ("Lista")]
-    public async Task<ActionResult<List<SaidaLivroTextoDto>>> LeituraListaLivroTexto()
-    {
-        var listaSaidaLivrotextoDto = await _livroTextoServico.LerListaLivroTextoAsync();
-        return Ok(listaSaidaLivrotextoDto);
-    }
+    [Route("Lista")]
+    public async Task<ActionResult<List<SaidaCacaPalavrasDto>>> Get() => Ok(await _livroTextoServico.LerListaLivroTextoAsync());
 
     [HttpGet]
-    [Route("ListaFiltro")]
-    public async Task<ActionResult<List<SaidaLivroTextoDto>>> LeituraListaFiltroLivroTexto(int codigoTexto)
-    {
-        var listaSaidaLivrotextoDto = await _livroTextoServico.LerListaFiltroLivroTextoAsync(codigoTexto);
-        return Ok(listaSaidaLivrotextoDto);
-    }
+    [Route("ListaFiltro")]    
+    public async Task<ActionResult<List<SaidaLivroTextoDto>>> Get(int codigoFiltro) 
+        => Ok(await _livroTextoServico.LerListaFiltroLivroTextoAsync(codigoFiltro));
 
     [HttpGet]
-    public async Task<ActionResult<SaidaLivroTextoDto>> LeituraLivroTexto(int codigoTexto)
+    [Route("Filtro")]
+    public async Task<ActionResult<SaidaLivroTextoDto>> LeituraLivroTexto(int codigo)
     {
-        var saidaLivroTextoDto = await _livroTextoServico.LerLivrotextoAsync(codigoTexto);
+        var saidaLivroTextoDto = await _livroTextoServico.LerLivrotextoAsync(codigo);
         return Ok(saidaLivroTextoDto);
     }
 
     [HttpPost]
-    public async Task<ActionResult> InclusaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
-    {
-        await _livroTextoServico.IncluirLivroAsync(entrada);
-        return Ok();
-    }
+    [Route("Inclusão")]
+    public async Task InclusaoLivroTexto([FromBody] EntradaLivroTextoDto entrada) => await _livroTextoServico.IncluirLivroAsync(entrada);
 
     [HttpDelete]
-    public async Task<ActionResult> ExclusaoLivroTexto(int codigotexto)
-    {
-        await _livroTextoServico.ExcluirLivroAsync(codigotexto);
-        return Ok();
-    }
+    [Route("Exclusão")]
+    public async Task ExclusaoLivroTexto(int codigo) => await _livroTextoServico.ExcluirLivroAsync(codigo);
 
     [HttpPut]
-    public async Task<ActionResult> AlteracaoLivroTexto([FromBody] EntradaLivroTextoDto entrada)
-    {
-        await _livroTextoServico.AlterarLivroAsync(entrada);
-        return Ok();
-    }
+    [Route("Alteração")]
+    public async Task AlteracaoLivroTexto([FromBody] EntradaLivroTextoDto entrada) => await _livroTextoServico.AlterarLivroAsync(entrada);
 }

@@ -6,13 +6,13 @@ public interface ILivroTextoServico
 {
     Task IncluirLivroAsync(EntradaLivroTextoDto entrada);
 
-    Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigoTexto);
+    Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigo);
 
     Task<List<SaidaLivroTextoDto>> LerListaLivroTextoAsync();
 
-    Task<List<SaidaLivroTextoDto>> LerListaFiltroLivroTextoAsync(int codigoTexto);
+    Task<List<SaidaLivroTextoDto>> LerListaFiltroLivroTextoAsync(int codigoFiltro);
 
-    Task ExcluirLivroAsync(int codigoTexto);
+    Task ExcluirLivroAsync(int codigo);
 
     Task AlterarLivroAsync(EntradaLivroTextoDto entrada);
 }
