@@ -16,6 +16,10 @@ public class AutorController : Controller
     }
 
     [HttpGet]
+    [Route("Lista")]
+    public async Task<ActionResult<List<SaidaAutorDto>>> Get() => Ok(await _autorService.LerAllAutoresAsync());
+
+    [HttpGet]
     [Route("LerPorCodigo")]
     public async Task<ActionResult<List<SaidaAutorDto>>> Get(int codigo) => Ok(await _autorService.LerAutorAsync(codigo));
 

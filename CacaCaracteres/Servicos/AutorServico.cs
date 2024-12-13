@@ -14,6 +14,25 @@ public class AutorServico : IAutorServico
         _autorRepositorio = autorRepositorio;
     }
 
+    public async Task<List<SaidaAutorDto>> LerAllAutoresAsync()
+    {
+        var autores = await _autorRepositorio.GetAllAsync();
+        var saidaAutorDtos = new List<SaidaAutorDto>();
+
+        if (autores != null)
+            autores
+                .OrderBy(x => x.Codigo)
+                .ToList()
+                .ForEach(x => saidaAutorDtos
+                                        .Add(new SaidaAutorDto()
+                                        {
+                                            Codigo = x.Codigo,
+                                            Nome = x.Nome
+                                        }));
+
+        return saidaAutorDtos;
+    }
+
     public async Task<List<SaidaAutorDto>> LerAutorAsync(int codigo)
     {
         var autores = await _autorRepositorio.WhereAllAsync(x => x.Codigo == codigo);
