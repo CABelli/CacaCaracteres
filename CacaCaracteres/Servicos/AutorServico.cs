@@ -27,7 +27,8 @@ public class AutorServico : IAutorServico
                                         .Add(new SaidaAutorDto()
                                         {
                                             Codigo = x.Codigo,
-                                            Nome = x.Nome
+                                            Nome = x.Nome,
+                                            AutorId = x.Id
                                         }));
 
         return saidaAutorDtos;
@@ -47,7 +48,8 @@ public class AutorServico : IAutorServico
                                         .Add(new SaidaAutorDto()
                                         {
                                             Codigo = x.Codigo,
-                                            Nome = x.Nome
+                                            Nome = x.Nome,
+                                            AutorId = x.Id
                                         }));        
 
         return saidaAutorDtos;
@@ -67,7 +69,28 @@ public class AutorServico : IAutorServico
                                 .Add(new SaidaAutorDto()
                                 {
                                     Nome = x.Nome,
-                                    Codigo = x.Codigo
+                                    Codigo = x.Codigo,
+                                    AutorId = x.Id
+                                }));
+
+        return saidaAutoresDto;
+    }
+    public async Task<List<SaidaAutorDto>> LerAutorAsync(Guid autorId)
+    {
+        var autores = await _autorRepositorio.WhereAllAsync(x => x.Id == autorId);
+
+        var saidaAutoresDto = new List<SaidaAutorDto>();
+
+        if (autores != null)
+            autores
+                .OrderBy(x => x.Nome)
+                .ToList()
+                .ForEach(x => saidaAutoresDto
+                                .Add(new SaidaAutorDto()
+                                {
+                                    Nome = x.Nome,
+                                    Codigo = x.Codigo,
+                                    AutorId = x.Id
                                 }));
 
         return saidaAutoresDto;

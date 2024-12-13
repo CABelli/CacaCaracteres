@@ -2,6 +2,7 @@
 
 public class SaidaLivroTextoDto
 {
+    public string? NomeAutor { get; set; }
     public int CodigoLivro {  get; set; }
     public string Texto { get; set; }
     public int NumeroDePalavras { get; set; } = 0;

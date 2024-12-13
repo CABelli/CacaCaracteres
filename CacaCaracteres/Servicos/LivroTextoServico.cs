@@ -10,10 +10,12 @@ namespace CacaCaracteres.Servicos
     public class LivroTextoServico : ILivroTextoServico
     {
         private readonly ILivroTextoRepositorio _livroTextoRepositorio;
+        private readonly IAutorServico _autorServico;
 
-        public LivroTextoServico (ILivroTextoRepositorio livroTextoRepositorio)
+        public LivroTextoServico (ILivroTextoRepositorio livroTextoRepositorio, IAutorServico autorServico)
         {
             _livroTextoRepositorio = livroTextoRepositorio;
+            _autorServico = autorServico;   
         }
 
         public async Task<List<SaidaLivroTextoDto>> LerListaLivroTextoAsync()
@@ -25,6 +27,7 @@ namespace CacaCaracteres.Servicos
             if (listLivroTexto != null)
                 listLivroTexto.OrderBy(x => x.CodigoTexto).ToList().ForEach(y => listSaidaLivroTextoDdto
                     .Add(new SaidaLivroTextoDto() {
+                        NomeAutor = BuscaNomeAutor(y.AutorId).Result,
                         CodigoLivro = y.CodigoTexto,
                         Texto = y.Texto,
                         NumeroDePalavras = NumeroDePalavrasCalc(y.Texto),
@@ -38,12 +41,19 @@ namespace CacaCaracteres.Servicos
             return listSaidaLivroTextoDdto;
         }
 
+        public async Task<string> BuscaNomeAutor(Guid autorId)
+        {
+            var autores = await _autorServico.LerAutorAsync(autorId);
+            return autores[0].Nome;
+        }
+
         public async Task<SaidaLivroTextoDto> LerLivrotextoAsync(int codigo)
         {
             var livroTexto = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigo);
             if (livroTexto == null) return new SaidaLivroTextoDto();
             var saidaLivroTextoDto = new SaidaLivroTextoDto()
             {
+                NomeAutor = BuscaNomeAutor(livroTexto.AutorId).Result,
                 CodigoLivro = codigo,
                 Texto = livroTexto.Texto,
                 NumeroDePalavras = NumeroDePalavrasCalc(livroTexto.Texto),
@@ -66,6 +76,7 @@ namespace CacaCaracteres.Servicos
                 listLivroTexto.OrderBy(x => x.CodigoTexto).ToList().ForEach(y => listSaidaLivroTextoDdto
                     .Add(new SaidaLivroTextoDto()
                     {
+                        NomeAutor = BuscaNomeAutor(y.AutorId).Result,
                         CodigoLivro = y.CodigoTexto,
                         Texto = y.Texto,
                         NumeroDePalavras = NumeroDePalavrasCalc(y.Texto),
@@ -86,8 +97,17 @@ namespace CacaCaracteres.Servicos
                 // criar FluentValidation / ErrorsNotFoundException
                 //throw new Exception(String.Format("Codigo texto {0} já esta cadastrado.", entrada.CodigoTexto));
                 throw new ErrorsFoundException(new List<string>() { String.Format("Codigo texto {0} ja esta cadastrado.", entrada.CodigoTexto) });
-            
-            var livroTexto = new LivroTexto { CodigoTexto = entrada.CodigoTexto, Texto = entrada.Texto };
+
+            var autores = _autorServico.LerAutorAsync(entrada.CodigoAutor);
+            if (autores.Result.Count == 0)
+                throw new ErrorsNotFoundException(new List<string>() 
+                { String.Format("Autor nao cadastrado com codigo: {0}",entrada.CodigoAutor) });
+
+            var livroTexto = new LivroTexto { 
+                CodigoTexto = entrada.CodigoTexto, 
+                Texto = entrada.Texto,
+                AutorId = autores.Result[0].AutorId
+            };
             _livroTextoRepositorio.Create(livroTexto);
             await Task.Yield();
         }
@@ -112,7 +132,13 @@ namespace CacaCaracteres.Servicos
                 //throw new Exception(String.Format("O codigo texto {0} não encontrado.", entrada.CodigoTexto));
                 throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", entrada.CodigoTexto) });
 
+            var autores = _autorServico.LerAutorAsync(entrada.CodigoAutor);
+            if (autores.Result.Count == 0)
+                throw new ErrorsNotFoundException(new List<string>()
+                { String.Format("Autor nao cadastrado com codigo: {0}",entrada.CodigoAutor) });
+
             livroTextoDb.Texto = entrada.Texto;
+            livroTextoDb.AutorId = autores.Result[0].AutorId;
             _livroTextoRepositorio.Update(livroTextoDb);
             await Task.Yield();
         }
