@@ -11,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IResumoTextoServico, ResumoTextoServico>();
 builder.Services.AddScoped<ILivroTextoRepositorio, LivroTextoRepositorio>();
 builder.Services.AddScoped<ILivroTextoServico, LivroTextoServico>();
+builder.Services.AddScoped<IAutorRepositorio, AutorRepositorio>();
+builder.Services.AddScoped<IAutorServico, AutorServico>();
 
 IConfiguration configuration = builder.Configuration;
 builder.Services.AddDbContext<AppDataBaseContext>(options =>
