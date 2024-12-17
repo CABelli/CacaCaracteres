@@ -3,6 +3,7 @@ using CacaCaracteres.ExceptionBase;
 using CacaCaracteres.ExtensoesCaracteres;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
+using CacaCaracteres.Resources.Servicos;
 using System.Text;
 
 namespace CacaCaracteres.Servicos
@@ -95,13 +96,17 @@ namespace CacaCaracteres.Servicos
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb != null)
                 // criar FluentValidation / ErrorsNotFoundException
-                //throw new Exception(String.Format("Codigo texto {0} já esta cadastrado.", entrada.CodigoTexto));
-                throw new ErrorsFoundException(new List<string>() { String.Format("Codigo texto {0} ja esta cadastrado.", entrada.CodigoTexto) });
+                throw new ErrorsFoundException(new List<string>() 
+                { 
+                    String.Format(Resource.TextCodeIsAlreadyRegistered, entrada.CodigoTexto) 
+                });
 
             var autores = _autorServico.LerAutorAsync(entrada.CodigoAutor);
             if (autores.Result.Count == 0)
                 throw new ErrorsNotFoundException(new List<string>() 
-                { String.Format("Autor nao cadastrado com codigo: {0}",entrada.CodigoAutor) });
+                { 
+                    String.Format(Resource.AuthorCodeNotRegistered,entrada.CodigoAutor) 
+                });
 
             var livroTexto = new LivroTexto { 
                 CodigoTexto = entrada.CodigoTexto, 
@@ -117,8 +122,10 @@ namespace CacaCaracteres.Servicos
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == codigo);
             if (livroTextoDb == null)
                 // criar FluentValidation / ErrorsNotFoundException
-                //throw new Exception(String.Format("O codigo texto {0} não encontrado.", codigo));
-                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", codigo) });
+                throw new ErrorsNotFoundException(new List<string>() 
+                { 
+                    String.Format(Resource.TextCodeNotRegistered, codigo) 
+                });
             
             _livroTextoRepositorio.Delete(livroTextoDb);
             await Task.Yield();
@@ -129,13 +136,17 @@ namespace CacaCaracteres.Servicos
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb == null)
                 // criar FluentValidation / ErrorsNotFoundException
-                //throw new Exception(String.Format("O codigo texto {0} não encontrado.", entrada.CodigoTexto));
-                throw new ErrorsNotFoundException(new List<string>() { String.Format("O codigo texto {0} nao foi encontrado.", entrada.CodigoTexto) });
+                throw new ErrorsNotFoundException(new List<string>() 
+                { 
+                    String.Format(Resource.TextCodeNotRegistered, entrada.CodigoTexto) 
+                });
 
             var autores = _autorServico.LerAutorAsync(entrada.CodigoAutor);
             if (autores.Result.Count == 0)
-                throw new ErrorsNotFoundException(new List<string>()
-                { String.Format("Autor nao cadastrado com codigo: {0}",entrada.CodigoAutor) });
+                throw new ErrorsNotFoundException(new List<string>()                
+                { 
+                    String.Format(Resource.AuthorCodeNotRegistered, entrada.CodigoAutor) }
+                );
 
             livroTextoDb.Texto = entrada.Texto;
             livroTextoDb.AutorId = autores.Result[0].AutorId;

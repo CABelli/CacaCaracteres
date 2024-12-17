@@ -1,10 +1,19 @@
 using CacaCaracteres.ContextoDB;
 using CacaCaracteres.FiltrosMensagem;
 using CacaCaracteres.Repositorio;
+using CacaCaracteres.Resources.Servicos;
 using CacaCaracteres.Servicos;
 using Microsoft.EntityFrameworkCore;
+using ResourcesServicos = CacaCaracteres.Resources.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+var KeyVaultGlobalCultureLanguage = builder.Configuration.GetRequiredSection("KeyVault:KeyVaultGlobalCultureLanguage");
+Resource.Culture = new System.Globalization.CultureInfo(KeyVaultGlobalCultureLanguage.Value);
+ResourcesServicos.Resource.Culture = new System.Globalization.CultureInfo(KeyVaultGlobalCultureLanguage.Value);
 
 // Add services to the container.
 
