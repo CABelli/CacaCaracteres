@@ -70,6 +70,15 @@ namespace CacaCaracteres.Resources.Servicos {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantidade de caracteres do atributo nome nao pode ser {0}, deve ficar entre {1} e {2}.
+        /// </summary>
+        public static string AutorValidator_Error_CharacName {
+            get {
+                return ResourceManager.GetString("AutorValidator_Error_CharacName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código texto {0} já esta cadastrado.
         /// </summary>
         public static string TextCodeIsAlreadyRegistered {

@@ -2,6 +2,7 @@
 using CacaCaracteres.ExceptionBase;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
+using CacaCaracteres.Validator;
 
 namespace CacaCaracteres.Servicos;
 
@@ -98,6 +99,12 @@ public class AutorServico : IAutorServico
 
     public async Task AddAutorAsync(EntradaAutorDto entrada)
     {
+        int a = 0;
+        int b = 0;
+        int c = a / b;
+
+        EntradaAutorAddValidator(entrada);
+
         var autores = await LerAutorAsync(entrada.Codigo);
         if (autores.Count > 0)        
             throw new ErrorsFoundException(new List<string>() 
@@ -115,4 +122,12 @@ public class AutorServico : IAutorServico
         await Task.Yield();
     }
 
+    private void EntradaAutorAddValidator(EntradaAutorDto entrada)
+    {
+        var validator = new AutorValidator(EnumClass.EMethodAutorValidator.AddAutor);
+        var result = validator.Validate(entrada);
+        if (!result.IsValid)
+            throw new ErrosDeValidacaoException(result.Errors.Select(e => e.ErrorMessage).ToList());
+            //throw new ErrorsNotFoundException(result.Errors.Select(e => e.ErrorMessage).ToList());
+    }
 }

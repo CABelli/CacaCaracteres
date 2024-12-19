@@ -120,6 +120,9 @@
   <data name="AuthorCodeNotRegistered" xml:space="preserve">
     <value>Código do autor: {0} não cadastrado</value>
   </data>
+  <data name="AutorValidator_Error_CharacName" xml:space="preserve">
+    <value>Quantidade de caracteres do atributo nome nao pode ser {0}, deve ficar entre {1} e {2}</value>
+  </data>
   <data name="TextCodeIsAlreadyRegistered" xml:space="preserve">
     <value>Código texto {0} já esta cadastrado</value>
   </data>
