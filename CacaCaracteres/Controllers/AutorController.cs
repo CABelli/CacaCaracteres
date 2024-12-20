@@ -30,4 +30,11 @@ public class AutorController : Controller
     [HttpPost]
     [Route ("Inclusão")]
     public async Task InclusaoAutor([FromBody] EntradaAutorDto entrada) => await _autorService.AddAutorAsync(entrada);
+
+    [HttpDelete]
+    [Route("Exclusão")]
+    public async Task ExclusaoAutor(int codigo)
+    {
+        await _autorService.DeleteAutorAsync(codigo);
+    }
 }

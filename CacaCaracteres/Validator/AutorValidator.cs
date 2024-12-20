@@ -16,8 +16,13 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
     {
         switch (method)
         {
-            case EMethodAutorValidator.AddAutor: ValidatorAddAutor();
-            return;
+            case EMethodAutorValidator.AddAutor: 
+                ValidatorAddAutor();
+                return;
+
+            case EMethodAutorValidator.DeleteAutor:
+                ValidatorDeleteAutor();
+                return;
         }
     }
 
@@ -26,6 +31,8 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
         ValidatorName();
         ValidatorCodigoAutor();
     }
+    public void ValidatorDeleteAutor()
+    { }
 
     private void ValidatorName()
     {

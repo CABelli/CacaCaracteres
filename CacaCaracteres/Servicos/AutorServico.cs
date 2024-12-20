@@ -69,9 +69,9 @@ public class AutorServico : IAutorServico
 
     public async Task AddAutorAsync(EntradaAutorDto entrada)
     {
-        int a = 0;
-        int b = 0;
-        int c = a / b;
+        //int a = 0;
+        //int b = 0;
+        //int c = a / b;
 
         EntradaAutorAddValidator(entrada);
 
@@ -91,6 +91,34 @@ public class AutorServico : IAutorServico
 
         var livro = new Autor() { Codigo = entrada.Codigo, Nome = entrada.Nome };
         _autorRepositorio.Create(livro);
+        await Task.Yield();
+    }
+
+    public async Task DeleteAutorAsync(int codigo) 
+    {
+        var autor = await _autorRepositorio.WhereFirstAsync(x => x.Codigo == codigo);
+        if (autor == null)
+            throw new ErrorsNotFoundException(new List<string>()
+            {
+                String.Format(Resource.AuthorCodeNotRegistered, autor.Codigo)
+            });
+
+        _autorRepositorio.Delete(autor);
+        await Task.Yield();
+    }
+
+    public async Task UpdateAutorAsync(EntradaAutorDto entrada) 
+    {
+        var autor = await _autorRepositorio.WhereFirstAsync(x => x.Codigo == entrada.Codigo);
+        if (autor == null)
+            throw new ErrorsNotFoundException(new List<string>()
+            {
+                String.Format(Resource.AuthorCodeNotRegistered, autor.Codigo)
+            });
+
+        autor.Nome = entrada.Nome;
+        _autorRepositorio.Update(autor);
+
         await Task.Yield();
     }
 
