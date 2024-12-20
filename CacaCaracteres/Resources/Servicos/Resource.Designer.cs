@@ -70,6 +70,33 @@ namespace CacaCaracteres.Resources.Servicos {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Codigo Autor: {0} ja cadastrado - Nome: {1}.
+        /// </summary>
+        public static string AuthorCodeRegistered {
+            get {
+                return ResourceManager.GetString("AuthorCodeRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nome Autor: {0} ja cadastrado - Codigo: {1}.
+        /// </summary>
+        public static string AuthorNameRegistered {
+            get {
+                return ResourceManager.GetString("AuthorNameRegistered", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade de caracteres do atributo codigo deve ficar entre {0} e {1}.
+        /// </summary>
+        public static string AutorValidator_Error_CharacCodigo {
+            get {
+                return ResourceManager.GetString("AutorValidator_Error_CharacCodigo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade de caracteres do atributo nome nao pode ser {0}, deve ficar entre {1} e {2}.
         /// </summary>
         public static string AutorValidator_Error_CharacName {

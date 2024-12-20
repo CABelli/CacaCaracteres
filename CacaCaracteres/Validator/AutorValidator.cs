@@ -9,6 +9,8 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
 {
     private int MinNumberOfCharacName = 4;
     private int MaxNumberOfCharacName = 12;
+    private int MinNumberOfCharacCodAutor = 1;
+    private int MaxNumberOfCharacCodAutor = 10;
 
     public AutorValidator(EMethodAutorValidator method)
     {
@@ -22,6 +24,7 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
     public void ValidatorAddAutor()
     {
         ValidatorName();
+        ValidatorCodigoAutor();
     }
 
     private void ValidatorName()
@@ -33,5 +36,13 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
                                                   MinNumberOfCharacName,
                                                   MaxNumberOfCharacName
                                                   ));
+    }
+
+    private void ValidatorCodigoAutor()
+    {
+        RuleFor(Rec => Rec.Codigo).InclusiveBetween(MinNumberOfCharacCodAutor, MaxNumberOfCharacCodAutor)
+            .WithMessage(Rec => string.Format(Resource.AutorValidator_Error_CharacCodigo,
+                                                    MinNumberOfCharacCodAutor,
+                                                    MaxNumberOfCharacCodAutor));
     }
 }

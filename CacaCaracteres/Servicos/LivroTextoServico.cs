@@ -95,7 +95,6 @@ namespace CacaCaracteres.Servicos
         {
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb != null)
-                // criar FluentValidation / ErrorsNotFoundException
                 throw new ErrorsFoundException(new List<string>() 
                 { 
                     String.Format(Resource.TextCodeIsAlreadyRegistered, entrada.CodigoTexto) 

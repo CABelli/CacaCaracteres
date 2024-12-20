@@ -1,9 +1,8 @@
 ﻿using CacaCaracteres.ExceptionBase;
+using CacaCaracteres.Resources.Servicos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Extensions;
-using System.Collections.Immutable;
 using System.Net;
 using System.Web;
 
@@ -51,7 +50,7 @@ public class MessageOrExceptionFilter : IExceptionFilter
                 if (context.Exception is ErrosDeValidacaoException)
             {
                 var errosDeValidacao = context.Exception as ErrosDeValidacaoException;
-                errosDeValidacao?.MensagensDeErro.ForEach(msg => _logger.LogError(" LogError --- " + msg));
+                errosDeValidacao?.MensagensDeErro.ForEach(msg => _logger.LogInformation(" LogInformation 03 --- " + msg));
             }
         }
     }
@@ -97,9 +96,8 @@ public class MessageOrExceptionFilter : IExceptionFilter
     private static void TratarErrosValidacaoException(ExceptionContext context)
     {
         var errors = context.Exception as ErrosDeValidacaoException;
-        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.NoContent;
-        context.HttpContext.Response.Headers.Add("Reason", HttpUtility.HtmlEncode(errors.MensagensDeErro.FirstOrDefault()));
-        context.Result = new ObjectResult("");
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        context.Result = new ObjectResult(new TextFilterResponseDto(errors.MensagensDeErro));
     }
 
     private static void ThrowUnKnowError (ExceptionContext context)

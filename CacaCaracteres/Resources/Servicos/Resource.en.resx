@@ -120,6 +120,15 @@
   <data name="AuthorCodeNotRegistered" xml:space="preserve">
     <value>Author code: {0} not registered</value>
   </data>
+  <data name="AuthorCodeRegistered" xml:space="preserve">
+    <value>Author code: {0} registered - Name {1}</value>
+  </data>
+  <data name="AuthorNameRegistered" xml:space="preserve">
+    <value>Author Name: {0} registered - Code {1}</value>
+  </data>
+  <data name="AutorValidator_Error_CharacCodigo" xml:space="preserve">
+    <value>Code attribute number of characters must be between {0} and {1}</value>
+  </data>
   <data name="AutorValidator_Error_CharacName" xml:space="preserve">
     <value>Name attribute number of characters cannot be {0}, must be between {1} and {2}</value>
   </data>
