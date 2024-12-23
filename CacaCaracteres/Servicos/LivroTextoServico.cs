@@ -1,9 +1,11 @@
 ﻿using CacaCaracteres.Dto;
+using CacaCaracteres.EnumClass;
 using CacaCaracteres.ExceptionBase;
 using CacaCaracteres.ExtensoesCaracteres;
 using CacaCaracteres.Modelo;
 using CacaCaracteres.Repositorio;
 using CacaCaracteres.Resources.Servicos;
+using CacaCaracteres.Validator;
 using System.Text;
 
 namespace CacaCaracteres.Servicos
@@ -93,6 +95,8 @@ namespace CacaCaracteres.Servicos
 
         public async Task IncluirLivroAsync(EntradaLivroTextoDto entrada)
         {
+            ValidatorAddLivroTexto(entrada);
+
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb != null)
                 throw new ErrorsFoundException(new List<string>() 
@@ -132,6 +136,8 @@ namespace CacaCaracteres.Servicos
 
         public async Task AlterarLivroAsync(EntradaLivroTextoDto entrada)
         {
+            ValidatorAlteraLivroTexto(entrada);
+
             var livroTextoDb = await _livroTextoRepositorio.WhereFirstAsync(x => x.CodigoTexto == entrada.CodigoTexto);
             if (livroTextoDb == null)
                 // criar FluentValidation / ErrorsNotFoundException
@@ -167,6 +173,22 @@ namespace CacaCaracteres.Servicos
             });
 
             return soLetras.Trim().Split(' ').Length;
+        }
+
+        private void ValidatorAddLivroTexto(EntradaLivroTextoDto entrada)
+        {
+            var validator = new LivroTextoValidator(EMethodLivroTextoValidator.AddLivroTexto);
+            var result = validator.Validate(entrada);
+            if (!result.IsValid)
+                throw new ErrosDeValidacaoException(result.Errors.Select(x => x.ErrorMessage).ToList());
+        }
+
+        private void ValidatorAlteraLivroTexto(EntradaLivroTextoDto entrada)
+        {
+            var validator = new LivroTextoValidator(EMethodLivroTextoValidator.AlteraLivroTexto);
+            var result = validator.Validate(entrada);
+            if (!result.IsValid)
+                throw new ErrosDeValidacaoException(result.Errors.Select(x => x.ErrorMessage).ToList());             
         }
     }
 }

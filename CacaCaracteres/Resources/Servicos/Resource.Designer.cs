@@ -61,7 +61,7 @@ namespace CacaCaracteres.Resources.Servicos {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Código do autor: {0} não cadastrado.
+        ///   Looks up a localized string similar to Codigo do autor: {0} nao cadastrado.
         /// </summary>
         public static string AuthorCodeNotRegistered {
             get {
@@ -97,11 +97,29 @@ namespace CacaCaracteres.Resources.Servicos {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantidade de caracteres do atributo codigo nao pode ser {0}, deve ficar entre {1} e {2}.
+        /// </summary>
+        public static string AutorValidator_Error_CharacCodTexto {
+            get {
+                return ResourceManager.GetString("AutorValidator_Error_CharacCodTexto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantidade de caracteres do atributo nome nao pode ser {0}, deve ficar entre {1} e {2}.
         /// </summary>
         public static string AutorValidator_Error_CharacName {
             get {
                 return ResourceManager.GetString("AutorValidator_Error_CharacName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantidade de caracteres do atributo texto nao pode ser {0}, deve ficar entre {1} e {2}.
+        /// </summary>
+        public static string AutorValidator_Error_CharacTexto {
+            get {
+                return ResourceManager.GetString("AutorValidator_Error_CharacTexto", resourceCulture);
             }
         }
         

@@ -37,4 +37,8 @@ public class AutorController : Controller
     {
         await _autorService.DeleteAutorAsync(codigo);
     }
+
+    [HttpPut]
+    [Route("Alteração")]
+    public async Task AlteracaoAutor([FromBody] EntradaAutorDto entrada) => await _autorService.UpdateAutorAsync(entrada);
 }

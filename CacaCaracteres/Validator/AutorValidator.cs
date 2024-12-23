@@ -23,6 +23,10 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
             case EMethodAutorValidator.DeleteAutor:
                 ValidatorDeleteAutor();
                 return;
+
+            case EMethodAutorValidator.ModifyAutor:
+                ValidatorModifyAutor();
+                return;
         }
     }
 
@@ -31,8 +35,14 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
         ValidatorName();
         ValidatorCodigoAutor();
     }
+
     public void ValidatorDeleteAutor()
     { }
+
+    public void ValidatorModifyAutor()
+    {
+        ValidatorName();
+    }
 
     private void ValidatorName()
     {
@@ -47,7 +57,8 @@ public class AutorValidator : AbstractValidator<EntradaAutorDto>
 
     private void ValidatorCodigoAutor()
     {
-        RuleFor(Rec => Rec.Codigo).InclusiveBetween(MinNumberOfCharacCodAutor, MaxNumberOfCharacCodAutor)
+        RuleFor(Rec => Rec.Codigo)
+            .InclusiveBetween(MinNumberOfCharacCodAutor, MaxNumberOfCharacCodAutor)
             .WithMessage(Rec => string.Format(Resource.AutorValidator_Error_CharacCodigo,
                                                     MinNumberOfCharacCodAutor,
                                                     MaxNumberOfCharacCodAutor));

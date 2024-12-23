@@ -100,20 +100,22 @@ public class AutorServico : IAutorServico
         if (autor == null)
             throw new ErrorsNotFoundException(new List<string>()
             {
-                String.Format(Resource.AuthorCodeNotRegistered, autor.Codigo)
+                String.Format(Resource.AuthorCodeNotRegistered, codigo)
             });
 
         _autorRepositorio.Delete(autor);
         await Task.Yield();
     }
 
-    public async Task UpdateAutorAsync(EntradaAutorDto entrada) 
+    public async Task UpdateAutorAsync(EntradaAutorDto entrada)
     {
+        EntradaAutorAddValidator(entrada);
+
         var autor = await _autorRepositorio.WhereFirstAsync(x => x.Codigo == entrada.Codigo);
         if (autor == null)
             throw new ErrorsNotFoundException(new List<string>()
             {
-                String.Format(Resource.AuthorCodeNotRegistered, autor.Codigo)
+                String.Format(Resource.AuthorCodeNotRegistered, entrada.Codigo)
             });
 
         autor.Nome = entrada.Nome;

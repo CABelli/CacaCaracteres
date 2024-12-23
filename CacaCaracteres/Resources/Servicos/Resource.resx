@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AuthorCodeNotRegistered" xml:space="preserve">
-    <value>Código do autor: {0} não cadastrado</value>
+    <value>Codigo do autor: {0} nao cadastrado</value>
   </data>
   <data name="AuthorCodeRegistered" xml:space="preserve">
     <value>Codigo Autor: {0} ja cadastrado - Nome: {1}</value>
@@ -129,8 +129,14 @@
   <data name="AutorValidator_Error_CharacCodigo" xml:space="preserve">
     <value>Quantidade de caracteres do atributo codigo deve ficar entre {0} e {1}</value>
   </data>
+  <data name="AutorValidator_Error_CharacCodTexto" xml:space="preserve">
+    <value>Quantidade de caracteres do atributo codigo nao pode ser {0}, deve ficar entre {1} e {2}</value>
+  </data>
   <data name="AutorValidator_Error_CharacName" xml:space="preserve">
     <value>Quantidade de caracteres do atributo nome nao pode ser {0}, deve ficar entre {1} e {2}</value>
+  </data>
+  <data name="AutorValidator_Error_CharacTexto" xml:space="preserve">
+    <value>Quantidade de caracteres do atributo texto nao pode ser {0}, deve ficar entre {1} e {2}</value>
   </data>
   <data name="TextCodeIsAlreadyRegistered" xml:space="preserve">
     <value>Código texto {0} já esta cadastrado</value>

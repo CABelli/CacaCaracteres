@@ -129,8 +129,14 @@
   <data name="AutorValidator_Error_CharacCodigo" xml:space="preserve">
     <value>Code attribute number of characters must be between {0} and {1}</value>
   </data>
+  <data name="AutorValidator_Error_CharacCodTexto" xml:space="preserve">
+    <value>Code Texto attribute number of characters cannot be {0}, must be between {1} and {2}</value>
+  </data>
   <data name="AutorValidator_Error_CharacName" xml:space="preserve">
     <value>Name attribute number of characters cannot be {0}, must be between {1} and {2}</value>
+  </data>
+  <data name="AutorValidator_Error_CharacTexto" xml:space="preserve">
+    <value>Texo attribute number of characters cannot be {0}, must be between {1} and {2}</value>
   </data>
   <data name="TextCodeIsAlreadyRegistered" xml:space="preserve">
     <value>Text code {0} is already registered</value>
